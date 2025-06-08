@@ -20,6 +20,12 @@ A modern, production-ready Node.js backend API for managing users, authenticatio
 
 ## 📝 TODO
 
+- [ ] Implement a view to show subscription options (`GET /` in subscription.route.js)
+- [ ] Implement a view to show subscription details (`GET /:id` in subscription.route.js)
+- [ ] Implement a view to update subscription details (`PUT /:id` in subscription.route.js)
+- [ ] Implement a view to delete a subscription (`DELETE /` in subscription.route.js)
+- [ ] Implement a view to cancel a user's subscription (`PUT /user/:id/cancel` in subscription.route.js)
+- [ ] Implement a view to show upcoming renewals (`PUT /upcoming-renewals` in subscription.route.js)
 - [ ] (Add your next tasks here to keep track of what to implement)
 - [ ] Example: Add admin dashboard endpoints
 - [ ] Example: Integrate payment gateway (Stripe, PayPal, etc.)
