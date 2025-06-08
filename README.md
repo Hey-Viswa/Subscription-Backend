@@ -4,6 +4,46 @@ A modern, production-ready Node.js backend API for managing users, authenticatio
 
 ---
 
+## 🗂️ Workflow Overview
+
+![Workflow Concept](./workflow-concept%20(1).png)
+
+This workflow demonstrates how the system processes client requests using a Workflow API and QStash for stepwise, reliable execution:
+
+1. **Client** sends initial data to the **Workflow API**.
+2. The **Workflow API** forwards the initial data to **QStash** to start the workflow.
+3. **QStash** triggers the workflow steps:
+    - **Step 1**: Receives initial data, processes it, and returns results.
+    - **Step 2**: Receives results from Step 1, processes them, and returns final results.
+4. Each step's results are passed along and can be used for further processing or notifications.
+
+This architecture enables reliable, decoupled, and scalable background processing for subscription management, reminders, and notifications.
+
+### 🔄 Subscription Reminder Workflow (Algorithm)
+
+1. **Triggering the Workflow** — The workflow begins whenever a user creates or submits a new subscription. The created subscription ID is passed to the workflow.
+2. **Retrieving Subscription Details**
+    - The process extracts the **subscription ID** from the context.
+    - It then searches for the corresponding subscription in the database.
+3. **Validation Checks**
+    - If the subscription **does not exist**, an error is logged, and the process terminates.
+    - If the subscription exists, its **status is checked**:
+        - If **inactive**, the status is logged, and the process exits.
+        - If **active**, the renewal date is verified.
+4. **Renewal Date Evaluation**
+    - If the renewal date **has passed**, it logs this information and exits.
+    - If the renewal date is **in the future**, the reminder loop begins.
+5. **Reminder Scheduling**
+    - For each predefined reminder:
+        - The **reminder date is calculated**.
+        - If the reminder date is **in the future**, the system waits until that time.
+        - Once the reminder date arrives (or if it has already passed), the **reminder email is sent**.
+6. **Completion**
+    - The process repeats for all reminders in the list.
+    - After processing all reminders, the workflow concludes.
+
+---
+
 ## 🚀 Features
 
 - **User Registration & Authentication** (JWT-based)
